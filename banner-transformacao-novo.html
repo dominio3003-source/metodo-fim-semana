@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Banner Transformação - Método Fim de Semana</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#060d09;--g:#2ecc71;--g2:#a3ff6b;--r:#ff5a5f;--tx:#f3f8f5;--mut:#9db3a6;--card:rgba(255,255,255,.04);--bd:rgba(255,255,255,.1);--p:0}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',system-ui,Arial,sans-serif;background:var(--bg);color:var(--tx);overflow-x:hidden}
+.bar{position:fixed;top:0;left:0;height:3px;width:calc(var(--p)*100%);background:linear-gradient(90deg,var(--g),var(--g2));z-index:9}
+.wrap{position:relative;max-width:1180px;margin:0 auto;padding:90px 24px}
+.orb{position:fixed;border-radius:50%;filter:blur(90px);pointer-events:none;z-index:0;opacity:.35}
+.o1{width:480px;height:480px;background:#16a34a;top:-120px;right:-120px}
+.o2{width:380px;height:380px;background:#84cc16;bottom:-120px;left:-120px;opacity:.18}
+.grid-bg{position:fixed;inset:0;z-index:0;pointer-events:none;background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);background-size:56px 56px;mask-image:radial-gradient(ellipse at 50% 20%,#000 20%,transparent 75%)}
+main{position:relative;z-index:1}
+.head{text-align:center;max-width:820px;margin:0 auto 64px}
+.tag{display:inline-flex;align-items:center;gap:10px;padding:8px 18px;border:1px solid rgba(46,204,113,.4);background:rgba(46,204,113,.1);border-radius:99px;font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--g2)}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--g);box-shadow:0 0 0 0 rgba(46,204,113,.7);animation:ping 1.8s infinite}
+@keyframes ping{to{box-shadow:0 0 0 12px rgba(46,204,113,0)}}
+h1{font-size:clamp(34px,6vw,64px);font-weight:900;line-height:1.05;letter-spacing:-.03em;margin:26px 0 18px}
+.gr{background:linear-gradient(90deg,var(--g),var(--g2),var(--g));background-size:200% auto;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 5s linear infinite}
+.rd{color:var(--r)}
+@keyframes shine{to{background-position:200% center}}
+.sub{color:var(--mut);font-size:clamp(16px,2vw,19px);line-height:1.6}
+.stage{display:grid;grid-template-columns:1fr 84px 1fr;gap:20px;align-items:stretch}
+.col{border-radius:24px;padding:34px 30px;border:1px solid var(--bd);background:var(--card);backdrop-filter:blur(14px);transition:transform .25s,box-shadow .35s;transform-style:preserve-3d;position:relative}
+.col.a{border-color:rgba(255,90,95,.35);background:linear-gradient(160deg,rgba(255,90,95,.1),rgba(255,255,255,.02))}
+.col.d{border-color:rgba(46,204,113,.55);background:linear-gradient(160deg,rgba(46,204,113,.16),rgba(255,255,255,.02));box-shadow:0 0 60px rgba(46,204,113,.15)}
+.col:hover{box-shadow:0 24px 60px rgba(0,0,0,.45)}
+.col h2{font-size:13px;letter-spacing:.2em;text-transform:uppercase;font-weight:800;margin-bottom:26px;display:flex;align-items:center;gap:10px}
+.a h2{color:var(--r)}.d h2{color:var(--g)}
+.it{display:flex;gap:14px;align-items:flex-start;padding:15px 0;border-top:1px solid rgba(255,255,255,.07);font-size:16px;line-height:1.5}
+.it:first-of-type{border-top:0}
+.ic{flex:none;width:30px;height:30px;border-radius:9px;display:grid;place-items:center}
+.a .ic{background:rgba(255,90,95,.15);color:var(--r)}
+.d .ic{background:rgba(46,204,113,.2);color:var(--g)}
+.ic svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.a .it{opacity:.82}
+.mid{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.line{flex:1;width:2px;background:linear-gradient(var(--r),var(--g));border-radius:2px;transform-origin:top;transform:scaleY(var(--s,0));opacity:.7}
+.arrow{width:64px;height:64px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,var(--g),var(--g2));color:#04140a;box-shadow:0 0 0 calc(var(--s,0)*14px) rgba(46,204,113,.15),0 10px 30px rgba(46,204,113,.45);transform:rotate(calc(var(--s,0)*360deg)) scale(calc(.8 + var(--s,0)*.25))}
+.arrow svg{width:28px;height:28px;stroke:currentColor;fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.rv{opacity:0;transform:translateY(34px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1);transition-delay:var(--dl,0s)}
+.rv.l{transform:translateX(-50px)}.rv.r{transform:translateX(50px)}
+.rv.in{opacity:1;transform:none}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:56px 0 0}
+.st{padding:24px;border:1px solid var(--bd);border-radius:20px;background:var(--card);text-align:center}
+.st b{display:block;font-size:clamp(28px,4vw,42px);font-weight:900;color:var(--g)}
+.st span{color:var(--mut);font-size:14px}
+.cta{text-align:center;margin-top:60px}
+.btn{position:relative;display:inline-flex;align-items:center;gap:12px;padding:22px 44px;border-radius:16px;font-weight:900;font-size:clamp(16px,2.4vw,20px);text-transform:uppercase;letter-spacing:.03em;color:#04140a;text-decoration:none;background:linear-gradient(135deg,var(--g),var(--g2));box-shadow:0 14px 40px rgba(46,204,113,.45);overflow:hidden;transition:transform .2s,box-shadow .2s;animation:bob 2.6s ease-in-out infinite}
+.btn::after{content:'';position:absolute;top:0;left:-80%;width:50%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.65),transparent);transform:skewX(-20deg);animation:sweep 3s infinite}
+.btn:hover{transform:translateY(-4px) scale(1.04);box-shadow:0 20px 55px rgba(46,204,113,.65);animation:none}
+.btn svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;transition:transform .2s}
+.btn:hover svg{transform:translateX(6px)}
+@keyframes sweep{0%{left:-80%}60%,100%{left:140%}}
+@keyframes bob{50%{transform:translateY(-5px)}}
+.price{margin-top:18px;color:var(--mut);font-size:14px}
+.price s{opacity:.7}.price b{color:var(--tx)}
+.safe{margin-top:10px;font-size:12px;color:var(--mut);opacity:.8}
+.timer{display:inline-flex;flex-direction:column;align-items:center;gap:12px;margin-top:30px;padding:18px 26px;border:1px solid rgba(46,204,113,.45);border-radius:20px;background:rgba(46,204,113,.07)}
+.timer small{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--g2);font-weight:700}
+.clock{display:flex;align-items:center;gap:8px}
+.clock div{min-width:70px;padding:10px 6px;border-radius:12px;background:#0b1a12;border:1px solid var(--bd);text-align:center}
+.clock b{display:block;font-size:34px;font-weight:900;line-height:1;font-variant-numeric:tabular-nums;color:var(--tx)}
+.clock em{font-style:normal;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--mut)}
+.clock i{font-style:normal;font-weight:900;font-size:26px;color:var(--g);animation:blink 1s steps(2) infinite}
+@keyframes blink{50%{opacity:.2}}
+.timer.end b{color:var(--r)}
+.q{text-align:center;font-size:clamp(22px,3vw,30px);font-weight:800;margin:0 0 28px}
+.sec{text-align:center;max-width:760px;margin:90px auto 44px}
+.sec h2{font-size:clamp(26px,4vw,40px);font-weight:900;letter-spacing:-.02em;line-height:1.15;margin-bottom:16px}
+.mods{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.mod{padding:24px;border:1px solid var(--bd);border-radius:20px;background:var(--card);transition:transform .25s,border-color .25s,background .25s}
+.mod:hover{transform:translateY(-6px);border-color:rgba(46,204,113,.6);background:rgba(46,204,113,.08)}
+.mod span{font-size:28px;font-weight:900;color:var(--g)}
+.mod h3{font-size:17px;margin:8px 0 6px}
+.mod p{font-size:14px;color:var(--mut);line-height:1.55}
+.bonus{margin-top:24px;padding:26px;border:2px dashed rgba(46,204,113,.55);border-radius:22px;text-align:center;background:linear-gradient(135deg,rgba(46,204,113,.12),transparent)}
+.bonus h3{color:var(--g);font-size:20px;margin-bottom:8px}
+.bonus p{color:var(--mut)}.bonus p b{color:var(--tx)}
+.bonus em{display:block;margin-top:8px;font-style:normal;font-weight:800;color:var(--g2)}
+.guar{display:flex;gap:16px;align-items:flex-start;margin:24px auto 0;max-width:760px;padding:22px 26px;border-left:5px solid var(--g);border-radius:14px;background:var(--card);text-align:left}
+.guar b{display:block;color:var(--g);margin-bottom:4px;font-size:18px}
+.guar p{color:var(--mut);line-height:1.6;font-size:15px}
+.big{font-size:clamp(44px,8vw,64px);font-weight:900;color:var(--g);line-height:1}
+@media(max-width:900px){
+ .mods{grid-template-columns:1fr}
+ .clock div{min-width:58px}.clock b{font-size:28px}
+ .stage{grid-template-columns:1fr}
+ .mid{flex-direction:row;height:72px}
+ .line{width:auto;height:2px;transform-origin:left;transform:scaleX(var(--s,0))}
+ .arrow{transform:rotate(calc(90deg + var(--s,0)*360deg)) scale(calc(.8 + var(--s,0)*.25))}
+ .rv.l,.rv.r{transform:translateY(34px)}
+ .stats{grid-template-columns:1fr}
+ .wrap{padding:60px 18px}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div class="bar"></div>
+<div class="grid-bg"></div>
+<div class="orb o1" id="o1"></div>
+<div class="orb o2" id="o2"></div>
+
+<main><div class="wrap">
+
+  <header class="head">
+    <span class="tag rv"><i class="dot"></i>Transformação real</span>
+    <h1 class="rv" style="--dl:.1s">Sua vida <span class="rd">antes</span> e <span class="gr">depois</span> do Método Fim de Semana</h1>
+    <p class="sub rv" style="--dl:.2s">Usando apenas o celular. Sem estoque. Sem experiência. Sem patrão.</p>
+    <div class="timer rv" id="timer" style="--dl:.3s">
+      <small>Oferta por tempo limitado · expira em</small>
+      <div class="clock">
+        <div><b id="h">00</b><em>horas</em></div><i>:</i>
+        <div><b id="m">00</b><em>min</em></div><i>:</i>
+        <div><b id="s">00</b><em>seg</em></div>
+      </div>
+    </div>
+  </header>
+
+  <h2 class="q rv">Você se identifica?</h2>
+
+  <section class="stage" id="stage">
+    <div class="col a rv l" data-tilt>
+      <h2>Antes</h2>
+      <div class="it"><span class="ic"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></span>Trabalha a semana toda e o dinheiro nunca sobra</div>
+      <div class="it"><span class="ic"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></span>Vive apagando incêndio no fim do mês</div>
+      <div class="it"><span class="ic"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></span>Não tem tempo para buscar renda extra</div>
+      <div class="it"><span class="ic"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></span>Já tentou vender, mas não sabe por onde começar</div>
+      <div class="it"><span class="ic"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></span>Acha que precisa de estoque e investimento alto</div>
+      <div class="it"><span class="ic"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></span>Fim de semana passa em branco, sem resultado</div>
+    </div>
+
+    <div class="mid" aria-hidden="true">
+      <div class="line"></div>
+      <div class="arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+      <div class="line"></div>
+    </div>
+
+    <div class="col d rv r" data-tilt>
+      <h2>Depois</h2>
+      <div class="it"><span class="ic"><svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg></span><strong>Potencial de R$500+ por fim de semana</strong></div>
+      <div class="it"><span class="ic"><svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg></span>Trabalha só com o celular, de qualquer lugar</div>
+      <div class="it"><span class="ic"><svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg></span>Tem um método claro e um script pronto para usar</div>
+      <div class="it"><span class="ic"><svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg></span>Fecha vendas em até 24 horas pelo WhatsApp</div>
+      <div class="it"><span class="ic"><svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg></span>Sem estoque e sem investimento adicional</div>
+      <div class="it"><span class="ic"><svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg></span>Usa o fim de semana para mudar o jogo financeiro</div>
+    </div>
+  </section>
+
+  <section class="stats">
+    <div class="st rv"><b><span data-n="500" data-pre="R$">0</span>+</b><span>meta por fim de semana</span></div>
+    <div class="st rv" style="--dl:.12s"><b><span data-n="48">0</span>h</b><span>para o primeiro resultado</span></div>
+    <div class="st rv" style="--dl:.24s"><b>R$<span data-n="0">0</span></b><span>de estoque necessário</span></div>
+  </section>
+
+  <div class="sec rv">
+    <h2>Existe uma saída. E ela cabe no seu <span class="gr">fim de semana</span>.</h2>
+    <p class="sub">O Método Fim de Semana é um guia prático que mostra como gerar R$500+ em 48h, só com o celular e seguindo um processo simples. Sem investir dinheiro que você não tem.</p>
+  </div>
+
+  <h2 class="q rv">O que você aprende no ebook</h2>
+  <section class="mods">
+    <div class="mod rv"><span>01</span><h3>A Mentalidade dos R$500</h3><p>Por que a maioria falha antes de começar e como evitar esse erro.</p></div>
+    <div class="mod rv" style="--dl:.08s"><span>02</span><h3>O que vender (sem estoque)</h3><p>Produtos digitais validados que vendem hoje mesmo.</p></div>
+    <div class="mod rv" style="--dl:.16s"><span>03</span><h3>Onde estão seus clientes</h3><p>Grupos e canais onde o comprador já está esperando por você.</p></div>
+    <div class="mod rv"><span>04</span><h3>Script de Vendas no WhatsApp</h3><p>Copie, cole e envie. Mensagem pronta que converte.</p></div>
+    <div class="mod rv" style="--dl:.08s"><span>05</span><h3>Como fechar em 24 horas</h3><p>Técnica de urgência para o cliente decidir rápido.</p></div>
+    <div class="mod rv" style="--dl:.16s"><span>06</span><h3>De R$500 para R$1.000</h3><p>Como repetir e escalar no próximo fim de semana.</p></div>
+  </section>
+
+  <div class="bonus rv">
+    <h3>🎁 Bônus exclusivo · grátis</h3>
+    <p><b>Planilha de Controle de Vendas</b> – organize seus ganhos a cada fim de semana.</p>
+    <em>Valor: R$37 · Só hoje: GRÁTIS</em>
+  </div>
+
+  <div class="cta rv">
+    <p class="price" style="margin:0 0 6px"><s>De R$97,00</s></p>
+    <div class="big">R$11,90</div>
+    <p class="price" style="margin:8px 0 26px">Pagamento único · Acesso vitalício · Acesso imediato · Pix ou cartão</p>
+    <a class="btn" href="https://pay.cakto.com.br/qn3afsn_1149429">Quero meu acesso <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    <div class="guar rv"><span style="font-size:28px">🛡</span><div><b>Garantia incondicional de 7 dias</b><p>Se não ficar satisfeito, basta enviar um e-mail nos primeiros 7 dias e devolvemos 100% do seu dinheiro. Sem burocracia.</p></div></div>
+    <p class="safe">Compra 100% segura · Acesso imediato · Produto digital. Resultados variam conforme o empenho do aluno.</p>
+  </div>
+
+</div></main>
+
+<script>
+(function(){
+  var root=document.documentElement, o1=document.getElementById('o1'), o2=document.getElementById('o2'), stage=document.getElementById('stage');
+  // reveal on scroll
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');countUp(e.target);io.unobserve(e.target)}})},{threshold:.15});
+  document.querySelectorAll('.rv').forEach(function(el,i){
+    if(el.classList.contains('col')){el.querySelectorAll('.it').forEach(function(it,j){it.style.transitionDelay=(.15+j*.08)+'s'})}
+    io.observe(el)});
+  // contagem regressiva — defina a data real de fim da promoção aqui, ex: '2026-10-10T23:59:59-03:00'
+  var FIM_PROMO = null; // null = termina hoje às 23:59:59 (horário do visitante)
+  var fim = FIM_PROMO ? new Date(FIM_PROMO).getTime() : new Date().setHours(23,59,59,999);
+  var eh=document.getElementById('h'), em=document.getElementById('m'), es=document.getElementById('s');
+  function pad(n){return String(n).padStart(2,'0')}
+  function tick(){
+    var d=Math.max(fim-Date.now(),0);
+    eh.textContent=pad(Math.floor(d/3600000));
+    em.textContent=pad(Math.floor(d%3600000/60000));
+    es.textContent=pad(Math.floor(d%60000/1000));
+    if(d<3600000)document.getElementById('timer').classList.add('end');
+  }
+  tick();setInterval(tick,1000);
+  // count up
+  function countUp(el){el.querySelectorAll('[data-n]').forEach(function(n){
+    var t=+n.dataset.n,pre=n.dataset.pre||'',s=null;
+    (function f(ts){s=s||ts;var p=Math.min((ts-s)/1400,1);n.textContent=pre+Math.round(t*(1-Math.pow(1-p,3)));if(p<1)requestAnimationFrame(f)})(performance.now());
+  })}
+  // scroll-linked motion
+  function onScroll(){
+    var h=root.scrollHeight-innerHeight, y=scrollY;
+    root.style.setProperty('--p',h>0?y/h:0);
+    o1.style.transform='translateY('+(y*.25)+'px)';
+    o2.style.transform='translateY('+(-y*.18)+'px)';
+    var r=stage.getBoundingClientRect(), s=1-Math.min(Math.max((r.top+r.height*.1)/(innerHeight*.9),0),1);
+    stage.style.setProperty('--s',Math.min(s*1.4,1).toFixed(3));
+    stage.querySelectorAll('.mid').forEach(function(m){m.style.setProperty('--s',Math.min(s*1.4,1).toFixed(3))});
+    stage.querySelector('.col.a').style.filter='saturate('+(1-Math.min(s,1)*.6)+')';
+  }
+  addEventListener('scroll',onScroll,{passive:true});onScroll();
+  // 3D tilt on hover (desktop)
+  if(matchMedia('(hover:hover)').matches)document.querySelectorAll('[data-tilt]').forEach(function(c){
+    c.addEventListener('mousemove',function(e){var b=c.getBoundingClientRect(),x=(e.clientX-b.left)/b.width-.5,y=(e.clientY-b.top)/b.height-.5;
+      c.style.transition='box-shadow .35s';c.style.transform='perspective(900px) rotateY('+(x*6)+'deg) rotateX('+(-y*6)+'deg) translateY(-4px)'});
+    c.addEventListener('mouseleave',function(){c.style.transition='';c.style.transform=''});
+  });
+})();
+</script>
+</body>
+</html>
